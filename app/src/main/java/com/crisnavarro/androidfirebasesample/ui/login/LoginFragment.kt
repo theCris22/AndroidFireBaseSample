@@ -16,7 +16,7 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = LoginFragmentBinding.inflate(layoutInflater, container, false)
         return binding!!.root
     }
