@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.crisnavarro.androidfirebasesample.R
 import com.crisnavarro.androidfirebasesample.databinding.LoginFragmentBinding
 
@@ -23,6 +24,15 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initListeners()
+    }
+
+    private fun initListeners() = with(binding!!) {
+
+        buttonSignup.setOnClickListener {
+            findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToSignUpFragment())
+        }
+
     }
 
     override fun onDestroy() {

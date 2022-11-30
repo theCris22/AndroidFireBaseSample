@@ -5,4 +5,5 @@
     <string name="tv_password">Password</string>
     <string name="button_login_text">INICIAR SESION</string>
     <string name="button_sigup_text">REGISTRARME</string>
+    <string name="tv_password_confirm">Confirma password</string>
 </resources>
