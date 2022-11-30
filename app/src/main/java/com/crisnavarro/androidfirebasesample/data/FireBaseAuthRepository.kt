@@ -9,26 +9,33 @@ class FireBaseAuthRepository @Inject constructor(
 ) {
 
     suspend fun login(email: String, password: String): Boolean {
+        return try {
+            var isSuccess = false
 
-        var isSuccess = false
+            firebaseAuth.signInWithEmailAndPassword(email, password)
+                .addOnSuccessListener { isSuccess = true }
+                .addOnFailureListener { isSuccess = false }
+                .await()
+            isSuccess
 
-        firebaseAuth.signInWithEmailAndPassword(email, password)
-            .addOnSuccessListener { isSuccess = true }
-            .addOnFailureListener { isSuccess = false }
-            .await()
-
-        return isSuccess
+        } catch (ex: Exception) {
+            false
+        }
     }
 
     suspend fun signUp(email: String, password: String): Boolean {
-        var isSuccess = false
+        return try {
+            var isSuccess = false
 
-        firebaseAuth.createUserWithEmailAndPassword(email, password)
-            .addOnSuccessListener { isSuccess = true }
-            .addOnFailureListener { isSuccess = false }
-            .await()
+            firebaseAuth.createUserWithEmailAndPassword(email, password)
+                .addOnSuccessListener { isSuccess = true }
+                .addOnFailureListener { isSuccess = false }
+                .await()
+            isSuccess
 
-        return isSuccess
+        } catch (ex: Exception) {
+            false
+        }
     }
 
 }

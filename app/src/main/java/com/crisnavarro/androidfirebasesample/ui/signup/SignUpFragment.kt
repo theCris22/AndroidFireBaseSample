@@ -5,9 +5,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.crisnavarro.androidfirebasesample.R
+import com.crisnavarro.androidfirebasesample.core.isValidEmail
+import com.crisnavarro.androidfirebasesample.data.Resource
 import com.crisnavarro.androidfirebasesample.databinding.SignUpFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -28,8 +31,30 @@ class SignUpFragment : Fragment(R.layout.sign_up_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initViews()
         initObservers()
         initListeners()
+    }
+
+    private fun initViews() = with(binding!!) {
+
+        etEmail.doOnTextChanged { text, _, _, _ ->
+            enableButton().also {
+                if (text.toString().isValidEmail())
+                    tilEtEmail.error = null
+                else
+                    tilEtEmail.error = getString(R.string.invalid_email_error)
+            }
+        }
+
+        etPassword.doOnTextChanged { text, _, _, _ ->
+            enableButton().also {
+                if (text.toString().length >= 5)
+                    tilEtPassword.error = null
+                else
+                    tilEtPassword.error = getString(R.string.invalid_password_error)
+            }}
+
     }
 
     private fun initListeners() = with(binding!!) {
@@ -37,18 +62,17 @@ class SignUpFragment : Fragment(R.layout.sign_up_fragment) {
         buttonSignup.setOnClickListener {
             signUp()
         }
-
     }
 
     private fun initObservers() {
 
         viewModel.loginSuccess.observe(viewLifecycleOwner) {
             when (it) {
-                true -> {
-                    Log.e("SUCCESS", "SUCCESS")
+                is Resource.Error -> {
+                    Log.e("ERROR", "ERROR")
                 }
-                false -> {
-                    Log.e("FAILED", "FAILED")
+                is Resource.Success -> {
+                    Log.e("SUCCESS", "SUCCESS")
                 }
             }
         }
@@ -61,6 +85,11 @@ class SignUpFragment : Fragment(R.layout.sign_up_fragment) {
         val password = etPassword.text.toString()
 
         viewModel.signUp(email, password)
+    }
+
+    private fun enableButton() = with(binding!!) {
+        buttonSignup.isEnabled =
+            etEmail.text.toString().isValidEmail() && etPassword.text.toString().length >= 5
     }
 
     override fun onDestroy() {

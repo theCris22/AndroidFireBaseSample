@@ -6,4 +6,6 @@
     <string name="button_login_text">INICIAR SESION</string>
     <string name="button_sigup_text">REGISTRARME</string>
     <string name="tv_password_confirm">Confirma password</string>
+    <string name="invalid_email_error">Ingresa un email valido.</string>
+    <string name="invalid_password_error">El password debe ser mayor a 4 digitos.</string>
 </resources>
