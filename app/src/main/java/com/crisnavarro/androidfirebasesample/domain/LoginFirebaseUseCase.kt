@@ -2,8 +2,6 @@ package com.crisnavarro.androidfirebasesample.domain
 
 import com.crisnavarro.androidfirebasesample.data.FireBaseAuthRepository
 import com.crisnavarro.androidfirebasesample.data.Resource
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class LoginFirebaseUseCase @Inject constructor(

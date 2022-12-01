@@ -15,11 +15,11 @@ class SignUpViewModel @Inject constructor(
     private val signUpFirebaseUseCase: SignUpFirebaseUseCase
 ) : ViewModel() {
 
-    private val _loginSuccess: MutableLiveData<Resource<Boolean>> = MutableLiveData()
-    val loginSuccess: LiveData<Resource<Boolean>> get() = _loginSuccess
+    private val _signupSuccess: MutableLiveData<Resource<Boolean>> = MutableLiveData()
+    val signupSuccess: LiveData<Resource<Boolean>> get() = _signupSuccess
 
     fun signUp(email: String, password: String) = viewModelScope.launch {
-        _loginSuccess.postValue(signUpFirebaseUseCase.invoke(email, password))
+        _signupSuccess.postValue(signUpFirebaseUseCase.invoke(email, password))
     }
 
 }

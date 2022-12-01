@@ -49,7 +49,7 @@ class SignUpFragment : Fragment(R.layout.sign_up_fragment) {
 
         etPassword.doOnTextChanged { text, _, _, _ ->
             enableButton().also {
-                if (text.toString().length >= 5)
+                if (text.toString().length >= 6)
                     tilEtPassword.error = null
                 else
                     tilEtPassword.error = getString(R.string.invalid_password_error)
@@ -66,13 +66,13 @@ class SignUpFragment : Fragment(R.layout.sign_up_fragment) {
 
     private fun initObservers() {
 
-        viewModel.loginSuccess.observe(viewLifecycleOwner) {
+        viewModel.signupSuccess.observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Error -> {
-                    Log.e("ERROR", "ERROR")
+                    //Log.e("ERROR", "ERROR")
                 }
                 is Resource.Success -> {
-                    Log.e("SUCCESS", "SUCCESS")
+                    //Log.e("SUCCESS", "SUCCESS")
                 }
             }
         }
@@ -89,7 +89,7 @@ class SignUpFragment : Fragment(R.layout.sign_up_fragment) {
 
     private fun enableButton() = with(binding!!) {
         buttonSignup.isEnabled =
-            etEmail.text.toString().isValidEmail() && etPassword.text.toString().length >= 5
+            etEmail.text.toString().isValidEmail() && etPassword.text.toString().length >= 6
     }
 
     override fun onDestroy() {

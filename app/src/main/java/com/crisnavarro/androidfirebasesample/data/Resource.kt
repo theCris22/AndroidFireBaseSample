@@ -9,5 +9,5 @@ sealed class Resource <out R> {
 }*/
 sealed class Resource <out R> {
     data class Success<out T>(val data: T): Resource<T>()
-    data class Error(val message: String): Resource<Nothing>()
+    data class Error<out T>(val message: String? = null, val data: T? = null): Resource<T>()
 }
