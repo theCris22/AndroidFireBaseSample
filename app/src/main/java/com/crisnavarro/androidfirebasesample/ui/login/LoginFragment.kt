@@ -30,6 +30,14 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
         return binding!!.root
     }
 
+    override fun onStart() {
+        super.onStart()
+        with(binding!!) {
+            tilEtEmail.error = null
+            tilEtPassword.error = null
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
@@ -60,9 +68,11 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
     private fun initListeners() = with(binding!!) {
 
         buttonLogin.setOnClickListener { login() }
-
-        buttonSignup.setOnClickListener {
-            findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToSignUpFragment())
+        buttonSignup.setOnClickListener { findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToSignUpFragment()) }
+        buttonForgotPassword.setOnClickListener {
+            findNavController().navigate(
+                LoginFragmentDirections.actionLoginFragmentToRecoverPasswordFragment()
+            )
         }
 
     }
@@ -72,11 +82,18 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
         viewModel.loginSuccess.observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Error -> {
+                    Log.e("ERROR", "HERE")
                 }
                 is Resource.Success -> {
+                    Log.e("SUCCESS", "HERE")
+                    goToHome()
                 }
             }
         }
+    }
+
+    private fun goToHome() {
+        findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
     }
 
     private fun login() = with(binding!!) {
